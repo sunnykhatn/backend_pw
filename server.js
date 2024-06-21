@@ -6,6 +6,9 @@ const app = express();
 const server_config = require("./configs/server.config");
 const db_config = require("./configs/db.config");
 const user_model = require("./models/user.model");
+const bcrypt = require("bcryptjs")
+
+app.use(express.json())
 
 // Create an admin user at application startup
 // Connection with MongoDB
@@ -39,6 +42,13 @@ async function init() {
 }
 
 init(); // Call the init function to create admin user (if needed)
+
+//stich the route to the server
+require("./routes/auth.routes")(app)
+require("./routes/category.routes")(app)
+
+
+//start the server
 
 app.listen(server_config.PORT, () => {
   console.log("Server Started at port number:", server_config.PORT);
